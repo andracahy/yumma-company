@@ -1,11 +1,43 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { FiMonitor, FiSmartphone, FiCloud, FiCode } from 'react-icons/fi';
 
 export default function Home() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slides = [
+    {
+      image: '/images/banner1.jpeg',
+      title: 'Solusi Digital untuk',
+      highlight: 'Masa Depan',
+      desc: 'Menghadirkan inovasi teknologi untuk membangun bisnis Anda'
+    },
+    {
+      image: '/images/banner2.jpeg', 
+      title: 'Kembangkan Bisnis',
+      highlight: 'Bersama Kami',
+      desc: 'Tim profesional siap membantu transformasi digital perusahaan Anda'
+    },
+    {
+      image: '/images/banner3.jpeg',
+      title: 'Teknologi Terkini',
+      highlight: 'Untuk Anda',
+      desc: 'Menggunakan teknologi modern untuk solusi yang optimal'
+    }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(timer);
+  }, []);
+
   const fadeInUp = {
     initial: { opacity: 0, y: 60 },
     animate: { opacity: 1, y: 0 },
@@ -23,43 +55,94 @@ export default function Home() {
     <main className="min-h-screen">
       <Navbar />
       
-      {/* Hero Section - More responsive */}
-      <section id="beranda" className="min-h-screen py-20 flex items-center relative overflow-hidden bg-[#E7473C]">
-        <div 
-          className="absolute inset-0 bg-[url('/images/grid.svg')] opacity-10"
-          style={{
-            transform: 'translateY(var(--scroll-offset, 0))',
-            transition: 'transform 0.1s linear'
-          }}
-        />
-        <div className="container relative mx-auto px-6">
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            animate="animate"
-            className="text-center text-white"
-            style={{
-              transform: 'translateY(var(--scroll-offset-content, 0))',
-              transition: 'transform 0.2s linear'
-            }}
-          >
-            <motion.h1
-              variants={fadeInUp}
-              className="text-5xl md:text-7xl font-bold mb-6"
-            >
-              Solusi Digital untuk
-              <span className="text-[#F0F0F0]"> Masa Depan</span>
-            </motion.h1>
-            <motion.p variants={fadeInUp} className="text-xl md:text-2xl mb-8 text-[#F0F0F0]/80">
-              Menghadirkan inovasi teknologi untuk membangun bisnis Anda
-            </motion.p>
-            <motion.button
-              variants={fadeInUp}
-              className="px-8 py-4 bg-[#F0F0F0] text-[#E7473C] hover:bg-white font-semibold rounded-full transition-colors"
-            >
-              Mulai Sekarang
-            </motion.button>
-          </motion.div>
+      {/* Hero Section */}
+      <section id="beranda" className="h-screen relative overflow-hidden">
+        {/* Sliding content */}
+        <AnimatePresence initial={false}>
+          {slides.map((slide, index) => (
+            currentSlide === index && (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{
+                  x: { type: "spring", stiffness: 100, damping: 20 },
+                  opacity: { duration: 0.3 }
+                }}
+                className="absolute inset-0"
+              >
+                {/* Background Image with Overlay */}
+                <div 
+                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                  style={{ backgroundImage: `url(${slide.image})` }}
+                >
+                  <div className="absolute inset-0 bg-black/50" />
+                </div>
+
+                {/* Content */}
+                <div className="relative h-full flex items-center">
+                  <div className="container mx-auto px-6">
+                    <div className="max-w-4xl mx-auto text-center text-white">
+                      <motion.div
+                        initial={{ opacity: 0, x: 100 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -100 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                        className="mb-4 text-sm md:text-base font-medium tracking-wider text-[#E7473C]"
+                      >
+                      </motion.div>
+
+                      <motion.h1
+                        initial={{ opacity: 0, x: 100 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -100 }}
+                        transition={{ duration: 0.5 }}
+                        className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+                      >
+                        {slide.title}{' '}
+                        <span className="text-[#E7473C]">{slide.highlight}</span>
+                      </motion.h1>
+
+                      <motion.p 
+                        initial={{ opacity: 0, x: 100 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -100 }}
+                        transition={{ duration: 0.5 }}
+                        className="text-lg md:text-xl mb-8 text-gray-200"
+                      >
+                        {slide.desc}
+                      </motion.p>
+
+                      <motion.div 
+                        initial={{ opacity: 0, x: 100 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -100 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="flex justify-center gap-4"
+                      >
+                      </motion.div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )
+          ))}
+        </AnimatePresence>
+
+        {/* Slide Indicators */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                currentSlide === index 
+                  ? 'bg-[#E7473C] w-8' 
+                  : 'bg-white/50 hover:bg-white/80'
+              }`}
+            />
+          ))}
         </div>
       </section>
 
