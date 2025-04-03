@@ -36,7 +36,7 @@ export default function Home() {
     }, 5000); // Change slide every 5 seconds
 
     return () => clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
   const fadeInUp = {
     initial: { opacity: 0, y: 60 },
