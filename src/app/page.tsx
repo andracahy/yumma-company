@@ -38,19 +38,6 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [slides.length]);
 
-  const fadeInUp = {
-    initial: { opacity: 0, y: 60 },
-    animate: { opacity: 1, y: 0 },
-  };
-
-  const staggerContainer = {
-    animate: {
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
   return (
     <main className="min-h-screen">
       <Navbar />
@@ -84,15 +71,6 @@ export default function Home() {
                 <div className="relative h-full flex items-center">
                   <div className="container mx-auto px-6">
                     <div className="max-w-4xl mx-auto text-center text-white">
-                      <motion.div
-                        initial={{ opacity: 0, x: 100 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -100 }}
-                        transition={{ duration: 0.5, delay: 0.1 }}
-                        className="mb-4 text-sm md:text-base font-medium tracking-wider text-[#E7473C]"
-                      >
-                      </motion.div>
-
                       <motion.h1
                         initial={{ opacity: 0, x: 100 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -113,15 +91,6 @@ export default function Home() {
                       >
                         {slide.desc}
                       </motion.p>
-
-                      <motion.div 
-                        initial={{ opacity: 0, x: 100 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -100 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="flex justify-center gap-4"
-                      >
-                      </motion.div>
                     </div>
                   </div>
                 </div>
