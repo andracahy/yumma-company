@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar = () => {
@@ -20,87 +20,91 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed w-full z-50 transition-all duration-300 ${
+      className={`fixed w-full z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'bg-[#F0F0F0]/90 backdrop-blur-md shadow-lg' 
-          : 'bg-transparent'
+          ? 'bg-white/95 backdrop-blur-md shadow-lg py-4' 
+          : 'bg-transparent py-6'
       }`}
     >
-      <div className="container mx-auto px-6 py-4">
+      <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+          <motion.a
+            href="#"
             className={`text-2xl font-bold ${
-              isScrolled ? 'text-[#E7473C]' : 'text-[#F0F0F0]'
+              isScrolled ? 'text-[#E7473C]' : 'text-white'
             }`}
           >
             YUMMA
-          </motion.div>
+          </motion.a>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8">
-            {menuItems.map((item) => (
-              <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                whileHover={{ scale: 1.1 }}
-                className={`${
-                  isScrolled 
-                    ? 'text-gray-700 hover:text-[#E7473C]' 
-                    : 'text-[#F0F0F0] hover:text-white'
-                } font-medium transition-colors`}
-              >
-                {item}
-              </motion.a>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button - Improved visibility */}
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            onClick={() => setIsOpen(!isOpen)}
-            className={`md:hidden p-2 rounded-lg ${
-              isScrolled 
-                ? 'text-gray-700 hover:bg-gray-100' 
-                : 'text-white hover:bg-white/10'
-            } transition-all`}
-            aria-label="Menu"
-          >
-            {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-          </motion.button>
-        </div>
-
-        {/* Mobile Menu - Updated styling */}
-        <motion.div
-          initial={false}
-          animate={{ 
-            height: isOpen ? 'auto' : 0,
-            opacity: isOpen ? 1 : 0
-          }}
-          className={`md:hidden overflow-hidden transition-all duration-300 ${
-            isScrolled ? 'bg-[#F0F0F0]/95' : 'bg-[#E7473C]/95'
-          } backdrop-blur-md rounded-lg mt-4`}
-        >
-          <div className="py-2">
+          <div className="hidden md:flex items-center space-x-8">
             {menuItems.map((item) => (
               <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                onClick={() => setIsOpen(false)}
-                className={`block px-4 py-2 text-lg ${
+                className={`relative group ${
                   isScrolled 
-                    ? 'text-gray-700 hover:bg-gray-200/50' 
-                    : 'text-white hover:bg-white/10'
-                } transition-colors`}
+                    ? 'text-gray-700 hover:text-[#E7473C]' 
+                    : 'text-white/90 hover:text-white'
+                } font-medium transition-colors duration-300`}
               >
                 {item}
+                <span className={`absolute -bottom-1 left-0 w-0 h-0.5 ${
+                  isScrolled ? 'bg-[#E7473C]' : 'bg-white'
+                } transition-all duration-300 group-hover:w-full`} />
               </a>
             ))}
           </div>
-        </motion.div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className={`md:hidden p-2 rounded-lg transition-colors ${
+              isScrolled 
+                ? 'text-gray-700 hover:bg-gray-100' 
+                : 'text-white hover:bg-white/10'
+            }`}
+          >
+            {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className={`md:hidden overflow-hidden ${
+                isScrolled ? 'bg-white' : 'bg-[#E7473C]'
+              }`}
+            >
+              <div className="py-4 space-y-2">
+                {menuItems.map((item) => (
+                  <motion.a
+                    key={item}
+                    href={`#${item.toLowerCase()}`}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: -20, opacity: 0 }}
+                    onClick={() => setIsOpen(false)}
+                    className={`block px-4 py-3 ${
+                      isScrolled 
+                        ? 'text-gray-700 hover:bg-gray-50' 
+                        : 'text-white hover:bg-white/10'
+                    } rounded-lg transition-colors`}
+                  >
+                    {item}
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.nav>
   );
