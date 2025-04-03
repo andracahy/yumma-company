@@ -23,8 +23,8 @@ export default function Home() {
     <main className="min-h-screen">
       <Navbar />
       
-      {/* Hero Section - Set to 100vh */}
-      <section id="beranda" className="h-screen flex items-center relative overflow-hidden bg-[#E7473C]">
+      {/* Hero Section - More responsive */}
+      <section id="beranda" className="min-h-screen py-20 flex items-center relative overflow-hidden bg-[#E7473C]">
         <div 
           className="absolute inset-0 bg-[url('/images/grid.svg')] opacity-10"
           style={{
@@ -63,8 +63,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Section - Set to 100vh */}
-      <section id="layanan" className="h-screen flex items-center bg-[#F0F0F0]">
+      {/* Services Section - More responsive */}
+      <section id="layanan" className="min-h-screen py-20 flex items-center bg-[#F0F0F0]">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0 }}
@@ -116,8 +116,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section - Set to 100vh */}
-      <section id="tentang" className="h-screen flex items-center bg-[#F0F0F0]">
+      {/* About Section - More responsive */}
+      <section id="tentang" className="min-h-screen py-20 flex items-center bg-[#F0F0F0]">
         <div className="container mx-auto px-6 relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -168,8 +168,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Portfolio Section - Fix scrolling issue */}
-      <section id="portofolio" className="h-screen flex items-center bg-white">
+      {/* Portfolio Section - More responsive */}
+      <section id="portofolio" className="min-h-screen py-20 flex items-center bg-white">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -240,8 +240,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Contact Section - Update sizing and layout */}
-      <section id="kontak" className="h-screen flex items-center bg-[#F0F0F0]">
+      {/* Contact Section - More responsive */}
+      <section id="kontak" className="min-h-screen py-20 flex items-center bg-[#F0F0F0]">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
