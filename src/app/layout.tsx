@@ -24,9 +24,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY;
+                document.documentElement.style.setProperty('--scroll-offset', scrolled * 0.5 + 'px');
+                document.documentElement.style.setProperty('--scroll-offset-content', scrolled * 0.3 + 'px');
+              });
+            `,
+          }}
+        />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>
