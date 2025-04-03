@@ -1,10 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { FiMonitor, FiSmartphone, FiCloud, FiCode, FiGithub, FiLayout, FiDatabase, FiServer } from 'react-icons/fi';
+import { FiMonitor, FiSmartphone, FiCloud, FiCode } from 'react-icons/fi';
 
 export default function Home() {
   const fadeInUp = {
